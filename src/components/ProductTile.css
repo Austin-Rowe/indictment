@@ -66,6 +66,7 @@ sup {
 
 .add-to-cart-button:active {
     background-color: rgb(78, 78, 78);
+    color: white;
 }
 
 

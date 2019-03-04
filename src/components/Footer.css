@@ -10,6 +10,8 @@
 }
 
 .social-icon {
+    position: relative;
+    z-index: 0;
     margin: 0 10px;
     transition-duration: .3s;
 }

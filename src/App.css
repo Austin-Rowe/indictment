@@ -1,9 +1,10 @@
 *:focus {
     outline: none;
 }
- * {
+
+* {
     color: rgb(78,78,78);
- }
+}
 
 #logo {
     width: 70vw;
