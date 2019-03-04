@@ -48,7 +48,7 @@ sup {
 .add-to-cart-quantity {
     font-size: 15px;
     width: 50px;
-    padding: 5px;
+    padding: 5px 10px 5px 15px;
     border: 1px solid rgb(78, 78, 78);
     border-radius: 15px;
 }

@@ -7,7 +7,7 @@ class ProductTile extends React.Component {
         super(props);
         this.state = {
             size: 'XS',
-            quantity: 0
+            quantity: null
         }
 
         this.updateQuantity = this.updateQuantity.bind(this);
@@ -39,7 +39,7 @@ class ProductTile extends React.Component {
                     <li onClick={this.updateSize} className={state.size === "XXL"? 'selected' : ''}>XXL</li>
                 </ul>                
                 <div className="add-to-cart-container">
-                    <input className="add-to-cart-quantity" type="number" min="0" value={state.quantity} onChange={this.updateQuantity}/> <div className="add-to-cart-button">ADD TO CART</div>
+                    <input className="add-to-cart-quantity" type="number" min="0" value={state.quantity} onChange={this.updateQuantity} placeholder="QTY" /> <div className="add-to-cart-button">ADD TO CART</div>
                 </div>        
             </div>
         );

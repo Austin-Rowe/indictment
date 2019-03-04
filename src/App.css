@@ -1,2 +1,11 @@
+*:focus {
+    outline: none;
+}
+ * {
+    color: rgb(78,78,78);
+ }
 
-
+#logo {
+    width: 70vw;
+    margin: 10px 20vw 20px 10vw;
+}
