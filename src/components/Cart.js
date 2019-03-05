@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import './Cart.css';
+import PaypalButton from './PaypalButton';
 
 class CartItem extends Component {
     constructor(props) {
@@ -54,29 +55,79 @@ class CartItem extends Component {
 }
 
 
-const Cart = (props) => {
-    let cartItems = props.cart.map(item => <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />);
-    let cartTotal = 0;
-    props.cart.forEach(item => cartTotal += (item.quantity * item.price));
-    if(props.visible && props.cart.length > 0){
-        return (
-            <div id="cart" >
-                {cartItems}
-                <div id="cart-summary">
-                    <h1>Total: <sup>$</sup>{cartTotal}</h1>
+class Cart extends Component {
+    render() {
+        const {
+            props, state
+        } = this;
+
+        let cartItems = props.cart.map(item => <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />);
+        let cartTotal = 0;
+        props.cart.forEach(item => cartTotal += (item.quantity * item.price));
+        if(props.visible && props.cart.length > 0){
+            const client = {
+                sandbox: "AVs_AY19sM-9EkTmunOiYdmxmqGYMxuOi7dB9nRusGx4MpIZ9mn3vHtxs76R7uShG2juynPzEbVCq3Pc",
+                production: ""
+            }
+            const onSuccess = () => {
+                props.dispatch({type: "PAYMENT"});
+            }
+        
+            const items = props.cart.map(item => ({
+                name: item.props.title + ' - ' + item.size,
+                quantity: item.quantity,
+                price: item.price,
+                sku: item.props.id,
+                currency: 'USD'
+            }));
+
+            return (
+                <div id="cart" >
+                    {cartItems}
+                    {props.paymentCompleted? 
+                        <div id="payment-confirmation-container">
+                            <div id="payment-confirmation-statement">
+                                <h1>
+                                    Thank you for your purchase!    
+                                </h1>
+                                <h3>
+                                    We will email you with order details and shipping information shortly.
+                                </h3>
+                            </div>
+                        </div>
+                        :
+                        null
+                    }
+                    <div id="cart-summary">
+                        <div id="cart-summary-content">
+                            <h1 id="cart-summary-total">Total: <sup>$</sup>{cartTotal}</h1>
+                            <div id="cart-summary-paypal">
+                                <PaypalButton 
+                                    client={client}
+                                    env={'sandbox'}
+                                    commit={true}
+                                    currency={'USD'}
+                                    total={cartTotal}
+                                    items={items}
+                                    onSuccess={onSuccess}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        );
-    } else {
-        return (
-            null
-        );
+            );
+        } else {
+            return (
+                null
+            );
+        }
     }
 }
 
 const mapStateToProps = state => ({
     visible: state.cartOpened,
-    cart: state.cart
+    cart: state.cart,
+    paymentCompleted: state.paymentCompleted
 });
  
 export default connect(mapStateToProps)(Cart);

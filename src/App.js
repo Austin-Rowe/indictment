@@ -15,14 +15,16 @@ import toggleCart from './redux-functions/toggleCart';
 
 const initialState = {
   cart: [],
-  cartOpened: false
+  cartOpened: false,
+  paymentCompleted: false
 };
 
 function reducer(state = initialState, action){
   switch(action.type){
     case "ADD_TO_CART": return {...state, cart: editCart(state.cart, action)};
     case "UPDATE_CART": return {...state, cart: editCart(state.cart, action), cartOpened: toggleCart(state.cart, state.cartOpened, action)};
-    case "TOGGLECART": return {...state, cartOpened: toggleCart(state.cart, state.cartOpened, action)};
+    case "TOGGLECART": return {...state, cartOpened: toggleCart(state.cart, state.cartOpened, action), paymentCompleted: false};
+    case "PAYMENT": return {...state, paymentCompleted: true};
     default: return state;
   }
 }
