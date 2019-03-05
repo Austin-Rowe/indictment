@@ -23,6 +23,11 @@
     display: inline;
 }
 
+#cart-x {
+    color: white;
+    margin-left: 15px;
+}
+
 #cart-image {
     width: 40px;
 }
