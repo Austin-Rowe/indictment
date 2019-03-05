@@ -72,8 +72,8 @@ class Cart extends Component {
         props.cart.forEach(item => cartTotal += (item.quantity * item.price));
         if(props.visible && props.cart.length > 0){
             const client = {
-                sandbox: "AVs_AY19sM-9EkTmunOiYdmxmqGYMxuOi7dB9nRusGx4MpIZ9mn3vHtxs76R7uShG2juynPzEbVCq3Pc",
-                production: ""
+                sandbox: "AUQXEtmV08orxT5B9AURUh2JsmgMe4WwRfTp53vu8OxLBWl9-d705QlZSn5LlnOP3sx5mNtLOIYENLMg",
+                production: "AQW399YSU69nHgXrUQ-G5p8jj0JQMwPW72k3vPgSB1yt2gljKMOgtVJS-d91yD3kClnBmHMUsx20jB8_"
             }
             const onSuccess = () => {
                 props.dispatch({type: "PAYMENT"});
@@ -110,7 +110,7 @@ class Cart extends Component {
                             <div id="cart-summary-paypal">
                                 <PaypalButton 
                                     client={client}
-                                    env={'sandbox'}
+                                    env={'production'}
                                     commit={true}
                                     currency={'USD'}
                                     total={cartTotal}
