@@ -7,7 +7,6 @@
     z-index: 1;
     background-color: white;
     overflow-y: scroll;
-    padding-bottom: 500px;
     animation: slide-up .8s;
 }
 
@@ -49,6 +48,7 @@
     right: 0;
     background-color:white;
     border-top: 1px solid rgb(78, 78, 78);
+    border-radius: 30px;
 }
 
 #cart-summary-content {
@@ -63,11 +63,15 @@
 .cart-item {
     width: 90vw;
     margin: 10px auto 50px;
-    padding: 10px 0;
+    padding: 0 10px 70px;
     text-align: center;
     border-bottom: 1px solid rgb(223, 223, 223);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+.last {
+    margin-bottom: 25vh;
 }
 
 .cart-item-image {

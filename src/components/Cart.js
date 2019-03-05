@@ -43,7 +43,7 @@ class CartItem extends Component {
         const { props, state } = this;
 
         return (
-            <div className="cart-item">
+            <div className={props.lastItem? "last cart-item" : "cart-item"}>
                 <img className="cart-item-image" src={props.imgSrc} alt=""/>
                 <h1 className="cart-item-title">{props.title}<br/><sup>$</sup>{state.price} EACH</h1>
                 <div className="cart-item-qty-container">
@@ -58,10 +58,16 @@ class CartItem extends Component {
 class Cart extends Component {
     render() {
         const {
-            props, state
+            props, 
         } = this;
 
-        let cartItems = props.cart.map(item => <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />);
+        let cartItems = props.cart.map((item, i, arr) => {
+            if(arr.length - 1 === i){
+                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} lastItem={true} />
+            } else {
+                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description  + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />
+            }
+        });
         let cartTotal = 0;
         props.cart.forEach(item => cartTotal += (item.quantity * item.price));
         if(props.visible && props.cart.length > 0){
@@ -74,7 +80,7 @@ class Cart extends Component {
             }
         
             const items = props.cart.map(item => ({
-                name: item.props.title + ' - ' + item.size,
+                name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
                 quantity: item.quantity,
                 price: item.price,
                 sku: item.props.id,

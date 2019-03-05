@@ -7,6 +7,43 @@
 }
 
 #logo {
-    width: 70vw;
-    margin: 10px 20vw 20px 10vw;
+    width: 65vw;
+    margin: 10px 15vw 20px 1vw;
+}
+
+@media(min-width: 265px){
+    #logo {
+        width: 70vw;
+    }
+}
+
+@media(min-width: 320px){
+    #logo {
+        width: 75vw;
+    }
+}
+
+@media(min-width: 400px){
+    #logo {
+        width: 80vw;
+    }
+}
+
+@media(min-width: 780px){
+    #logo {
+        width: 85vw;
+        margin-left: 3vw;
+    }
+}
+
+@media(min-width: 1000px){
+    #logo {
+        width: 90vw;
+    }
+}
+
+@media(min-width: 1400px){
+    #logo {
+        width: 95vw;
+    }
 }

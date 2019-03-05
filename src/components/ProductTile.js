@@ -24,7 +24,7 @@ class ProductTile extends React.Component {
     updateSize(event){
         const { props, state } = this;
         this.setState({size: event.target.innerText, price: props.price});
-        if(event.target.innerText === "XL" || event.target.innerText === "XXL" ){
+        if(event.target.innerText === "XXL" ){
             this.setState({price: props.price + 2});
         } 
     }
@@ -55,6 +55,7 @@ class ProductTile extends React.Component {
             <div className="product-tile-container">
                 <img src={props.imgSrc} className="product-tile-image" alt="" />
                 <h1>{props.title}</h1>
+                <h2>{props.description}</h2>
                 <h1><sup>$</sup>{state.price}</h1>
                 <ul className="size-selector">
                     <li onClick={this.updateSize} className={state.size === "XS"? 'selected' : ''}>XS</li>
