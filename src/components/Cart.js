@@ -72,7 +72,7 @@ class Cart extends Component {
         props.cart.forEach(item => cartTotal += (item.quantity * item.price));
         if(props.visible && props.cart.length > 0){
             const client = {
-                sandbox: "AUQXEtmV08orxT5B9AURUh2JsmgMe4WwRfTp53vu8OxLBWl9-d705QlZSn5LlnOP3sx5mNtLOIYENLMg",
+                sandbox: "",
                 production: "AQW399YSU69nHgXrUQ-G5p8jj0JQMwPW72k3vPgSB1yt2gljKMOgtVJS-d91yD3kClnBmHMUsx20jB8_"
             }
             const onSuccess = () => {

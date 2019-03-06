@@ -54,6 +54,7 @@ class ProductTile extends React.Component {
         return ( 
             <div className="product-tile-container">
                 <img src={props.imgSrc} className="product-tile-image" alt="" />
+                {props.limitedEdition? <h1 className="limited-edition-label">LIMITED EDITION</h1> : null }
                 <h1>{props.title}</h1>
                 <h2>{props.description}</h2>
                 <h1><sup>$</sup>{state.price}</h1>
