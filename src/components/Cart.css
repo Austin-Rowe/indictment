@@ -112,6 +112,10 @@
     color: white;
 }
 
+#shipping {
+    font-size: 50%;
+}
+
 
 @media(min-width: 500px){
     .update-cart-button {
@@ -125,7 +129,7 @@
     }
     #cart-summary-content {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 3fr 2fr;
         margin-bottom: 10px;
     }
     #cart-summary-paypal {

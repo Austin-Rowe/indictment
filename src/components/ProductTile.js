@@ -22,7 +22,7 @@ class ProductTile extends React.Component {
     }
 
     updateSize(event){
-        const { props, state } = this;
+        const { props } = this;
         this.setState({size: event.target.innerText, price: props.price});
         if(event.target.innerText === "XXL" ){
             this.setState({price: props.price + 2});

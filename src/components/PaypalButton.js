@@ -46,8 +46,8 @@ class PaypalButton extends Component {
             onSuccess,
             onError,
             onCancel,
-            shipping,
-            items
+            items,
+            details
         } = this.props;
     
         const {showButton} = this.state;
@@ -58,6 +58,7 @@ class PaypalButton extends Component {
                     amount: {
                         total,
                         currency,
+                        details
                     },
                     item_list: {
                         items
@@ -100,7 +101,6 @@ class PaypalButton extends Component {
                         onCancel={onCancel}
                         onError={onError}
                         style={payPalStyle}
-                        shipping={shipping}
                     />
                 </div>
             );

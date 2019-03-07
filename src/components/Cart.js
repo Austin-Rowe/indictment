@@ -68,12 +68,33 @@ class Cart extends Component {
                 return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description  + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />
             }
         });
-        let cartTotal = 0;
-        props.cart.forEach(item => cartTotal += (item.quantity * item.price));
+        
+        const shippingCalculator = count => {
+            switch(count){
+                case 1: return 5;
+                case 2: return 5;
+                case 3: return 7;
+                case 4: return 7;
+                case 5: return 9;
+                case 6: return 9;
+                case 7: return 11;
+                case 8: return 11;
+                default: return 20;
+            }
+        }
+        let cartCount = 0;
+        let subTotal = 0;
+        props.cart.forEach(item => {subTotal += (item.quantity * item.price); cartCount += Number(item.quantity);});
+        const shipping = shippingCalculator(cartCount);
+        const cartTotal = shipping + subTotal;
         if(props.visible && props.cart.length > 0){
             const client = {
-                sandbox: "",
+                sandbox: "AUQXEtmV08orxT5B9AURUh2JsmgMe4WwRfTp53vu8OxLBWl9-d705QlZSn5LlnOP3sx5mNtLOIYENLMg",
                 production: "AQW399YSU69nHgXrUQ-G5p8jj0JQMwPW72k3vPgSB1yt2gljKMOgtVJS-d91yD3kClnBmHMUsx20jB8_"
+            }
+            const details = {
+                subtotal: subTotal,
+                shipping: `${shipping}.00`
             }
             const onSuccess = () => {
                 props.dispatch({type: "PAYMENT"});
@@ -106,7 +127,7 @@ class Cart extends Component {
                     }
                     <div id="cart-summary">
                         <div id="cart-summary-content">
-                            <h1 id="cart-summary-total">Total: <sup>$</sup>{cartTotal}</h1>
+                            <h1 id="cart-summary-total">Total: <sup>$</sup>{subTotal} + <sup>$</sup>{shipping}<sup id="shipping">shipping</sup></h1>
                             <div id="cart-summary-paypal">
                                 <PaypalButton 
                                     client={client}
@@ -116,6 +137,7 @@ class Cart extends Component {
                                     total={cartTotal}
                                     items={items}
                                     onSuccess={onSuccess}
+                                    details={details}
                                 />
                             </div>
                         </div>
