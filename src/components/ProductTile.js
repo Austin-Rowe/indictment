@@ -54,21 +54,34 @@ class ProductTile extends React.Component {
         return ( 
             <div className="product-tile-container">
                 <img src={props.imgSrc} className="product-tile-image" alt="" />
-                {props.limitedEdition? <h1 className="limited-edition-label">LIMITED EDITION</h1> : null }
+                {props.limitedEdition? 
+                    <React.Fragment>
+                        <h1 className="limited-edition-label">LIMITED EDITION</h1> 
+                        <h1 id="sold-out-label">SOLD OUT!</h1>
+                    </React.Fragment>
+                    : 
+                    null 
+                }
                 <h1>{props.title}</h1>
                 <h2>{props.description}</h2>
-                <h1><sup>$</sup>{state.price}</h1>
-                <ul className="size-selector">
-                    <li onClick={this.updateSize} className={state.size === "XS"? 'selected' : ''}>XS</li>
-                    <li onClick={this.updateSize} className={state.size === "S"? 'selected' : ''}>S</li>
-                    <li onClick={this.updateSize} className={state.size === "M"? 'selected' : ''}>M</li>
-                    <li onClick={this.updateSize} className={state.size === "L"? 'selected' : ''}>L</li>
-                    <li onClick={this.updateSize} className={state.size === "XL"? 'selected' : ''}>XL</li>
-                    <li onClick={this.updateSize} className={state.size === "XXL"? 'selected' : ''}>XXL</li>
-                </ul>                
-                <div className="add-to-cart-container">
-                    <input className="add-to-cart-quantity" type="number" min="1" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.addToCart} className="add-to-cart-button">ADD TO CART</div>
-                </div>        
+                {props.soldOut? 
+                    null
+                :
+                    <React.Fragment>
+                        <h1><sup>$</sup>{state.price}</h1>
+                        <ul className="size-selector">
+                            <li onClick={this.updateSize} className={state.size === "XS"? 'selected' : ''}>XS</li>
+                            <li onClick={this.updateSize} className={state.size === "S"? 'selected' : ''}>S</li>
+                            <li onClick={this.updateSize} className={state.size === "M"? 'selected' : ''}>M</li>
+                            <li onClick={this.updateSize} className={state.size === "L"? 'selected' : ''}>L</li>
+                            <li onClick={this.updateSize} className={state.size === "XL"? 'selected' : ''}>XL</li>
+                            <li onClick={this.updateSize} className={state.size === "XXL"? 'selected' : ''}>XXL</li>
+                        </ul>                
+                        <div className="add-to-cart-container">
+                            <input className="add-to-cart-quantity" type="number" min="1" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.addToCart} className="add-to-cart-button">ADD TO CART</div>
+                        </div>
+                    </React.Fragment>
+                }        
             </div>
         );
     }
