@@ -116,8 +116,23 @@
     font-size: 50%;
 }
 
+#intl-shipping-button {
+    width: 250px;
+    height: 40px;
+    color: white;
+    background: linear-gradient(to bottom, rgb(0, 0, 255), rgb(0, 0, 161));
+    margin: 0 auto 20px;
+    font-weight: 800;
+    border: 0;
+    border-radius: 10px;
+}
 
-@media(min-width: 500px){
+#intl-shipping-button:hover {
+    cursor: pointer;
+}
+
+
+@media(min-width: 900px){
     .update-cart-button {
         display: inline;
     }
@@ -129,10 +144,13 @@
     }
     #cart-summary-content {
         display: grid;
-        grid-template-columns: 3fr 2fr;
+        grid-template-columns: 3fr 3fr 3fr;
         margin-bottom: 10px;
     }
     #cart-summary-paypal {
         padding: 10% 0;
+    }
+    #intl-shipping-button {
+       margin: 25px 30px 20px 20px;
     }
 }

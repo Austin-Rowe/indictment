@@ -77,6 +77,7 @@ class PaypalButton extends Component {
                 paymentToken: data.paymentToken,
                 returnUrl: data.returnUrl,
             };
+            console.log(payment);
 
             onSuccess(payment);
         });

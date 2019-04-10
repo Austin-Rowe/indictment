@@ -26,7 +26,9 @@ class ProductTile extends React.Component {
         this.setState({size: event.target.innerText, price: props.price});
         if(event.target.innerText === "XXL" ){
             this.setState({price: props.price + 2});
-        } 
+        } else if(event.target.innerText === "XXXL" ){
+            this.setState({price: props.price + 3});
+        }
     }
 
     addToCart(){
@@ -76,6 +78,7 @@ class ProductTile extends React.Component {
                             <li onClick={this.updateSize} className={state.size === "L"? 'selected' : ''}>L</li>
                             <li onClick={this.updateSize} className={state.size === "XL"? 'selected' : ''}>XL</li>
                             <li onClick={this.updateSize} className={state.size === "XXL"? 'selected' : ''}>XXL</li>
+                            <li onClick={this.updateSize} className={state.size === "XXXL"? 'selected' : ''}>XXXL</li>
                         </ul>                
                         <div className="add-to-cart-container">
                             <input className="add-to-cart-quantity" type="number" min="1" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.addToCart} className="add-to-cart-button">ADD TO CART</div>

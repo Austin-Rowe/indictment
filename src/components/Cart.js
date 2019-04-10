@@ -56,9 +56,24 @@ class CartItem extends Component {
 
 
 class Cart extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            international: false
+        }
+
+        this.toggleIntl = this.toggleIntl.bind(this);
+    }
+
+    toggleIntl(){
+        this.setState(state => ({international: !state.international}));
+    }
+
     render() {
         const {
             props, 
+            state
         } = this;
 
         let cartItems = props.cart.map((item, i, arr) => {
@@ -69,23 +84,27 @@ class Cart extends Component {
             }
         });
         
-        const shippingCalculator = count => {
-            switch(count){
-                case 1: return 5;
-                case 2: return 5;
-                case 3: return 7;
-                case 4: return 7;
-                case 5: return 9;
-                case 6: return 9;
-                case 7: return 11;
-                case 8: return 11;
-                default: return 20;
+        const shippingCalculator = (count, international) => {
+            if(international){
+                return 24;
+            } else {
+                switch(count){
+                    case 1: return 5;
+                    case 2: return 7;
+                    case 3: return 10;
+                    case 4: return 12;
+                    case 5: return 12;
+                    case 6: return 12;
+                    case 7: return 12;
+                    case 8: return 12;
+                    default: return 20;
+                }
             }
         }
         let cartCount = 0;
         let subTotal = 0;
         props.cart.forEach(item => {subTotal += (item.quantity * item.price); cartCount += Number(item.quantity);});
-        const shipping = shippingCalculator(cartCount);
+        const shipping = shippingCalculator(cartCount, state.international);
         const cartTotal = shipping + subTotal;
         if(props.visible && props.cart.length > 0){
             const client = {
@@ -104,7 +123,7 @@ class Cart extends Component {
                 name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
                 quantity: item.quantity,
                 price: item.price,
-                sku: item.props.id,
+                sku: item.props.id + item.size,
                 currency: 'USD'
             }));
 
@@ -128,6 +147,7 @@ class Cart extends Component {
                     <div id="cart-summary">
                         <div id="cart-summary-content">
                             <h1 id="cart-summary-total">Total: <sup>$</sup>{subTotal} + <sup>$</sup>{shipping}<sup id="shipping">shipping</sup></h1>
+                            <button id="intl-shipping-button" onClick={this.toggleIntl}>{state.international? "CLICK IF ORDER IS WITHIN USA" : "ORDERS OUTSIDE USA CLICK HERE"}</button>
                             <div id="cart-summary-paypal">
                                 <PaypalButton 
                                     client={client}

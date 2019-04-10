@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-          <img id="logo" src="navImages/indictmentLogo.png" alt=""/>
+          <img id="logo" src="navImages/neon-logo.jpg" alt=""/>
           <CartToggle />
           <Cart />          
           <Products />
