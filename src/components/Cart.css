@@ -131,6 +131,30 @@
     cursor: pointer;
 }
 
+#discount-code-container {
+    height: 40px;
+    margin: 0 auto 20px;
+}
+
+#discount-code-input {
+    font-size: 22px;
+    width: 200px;
+}
+
+#discount-code-button {
+    height: 40px;
+    padding: 0 10px;
+    color: white;
+    background: linear-gradient(to bottom, rgb(0, 0, 255), rgb(0, 0, 161));
+    font-weight: 800;
+    border: 0;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+#discount-code-button:hover {
+    cursor: pointer;
+}
 
 @media(min-width: 900px){
     .update-cart-button {

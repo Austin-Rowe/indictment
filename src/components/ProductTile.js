@@ -8,12 +8,14 @@ class ProductTile extends React.Component {
         super(props);
         this.state = {
             size: 'XS',
+            neck: 'CREW NECK',
             quantity: 1, 
             price: props.price
         }
 
         this.updateQuantity = this.updateQuantity.bind(this);
         this.updateSize = this.updateSize.bind(this);
+        this.updateNeck = this.updateNeck.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
 
@@ -31,8 +33,12 @@ class ProductTile extends React.Component {
         }
     }
 
+    updateNeck(event){
+        this.setState({neck: event.target.innerText});
+    }
+
     addToCart(){
-        const addToCartObjCreator = (quantity, size, price, props) => {
+        const addToCartObjCreator = (quantity, size, neck, price, props) => {
             let quan;
             if(quantity !== 1){
                 quan = Number(quantity);
@@ -43,11 +49,12 @@ class ProductTile extends React.Component {
                 type: "ADD_TO_CART",
                 quantity: quan,
                 size: size,
+                neck: neck,
                 price: price,
                 props: props
             }
         }
-        const cartAction = addToCartObjCreator(this.state.quantity, this.state.size, this.state.price, this.props);
+        const cartAction = addToCartObjCreator(this.state.quantity, this.state.size, this.state.neck, this.state.price, this.props);
         this.props.dispatch(cartAction);
     }
 
@@ -66,11 +73,13 @@ class ProductTile extends React.Component {
                 }
                 <h1>{props.title}</h1>
                 <h2>{props.description}</h2>
-                {props.soldOut? 
-                    null
-                :
+                {props.itemType === "SHIRT"? 
                     <React.Fragment>
                         <h1><sup>$</sup>{state.price}</h1>
+                        <ul className="size-selector">
+                            <li onClick={this.updateNeck} className={state.neck === "CREW NECK"? 'selected' : ''}>CREW NECK</li>
+                            <li onClick={this.updateNeck} className={state.neck === "V-NECK"? 'selected' : ''}>V-NECK</li>
+                        </ul>
                         <ul className="size-selector">
                             <li onClick={this.updateSize} className={state.size === "XS"? 'selected' : ''}>XS</li>
                             <li onClick={this.updateSize} className={state.size === "S"? 'selected' : ''}>S</li>
@@ -84,7 +93,16 @@ class ProductTile extends React.Component {
                             <input className="add-to-cart-quantity" type="number" min="1" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.addToCart} className="add-to-cart-button">ADD TO CART</div>
                         </div>
                     </React.Fragment>
-                }        
+                    :
+                    <React.Fragment>
+                        <h1><sup>$</sup>{state.price}</h1>
+                        <div className="add-to-cart-container">
+                            <input className="add-to-cart-quantity" type="number" min="1" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.addToCart} className="add-to-cart-button">ADD TO CART</div>
+                        </div>
+                    </React.Fragment>
+                    
+                }
+                
             </div>
         );
     }

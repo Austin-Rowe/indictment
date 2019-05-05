@@ -60,14 +60,30 @@ class Cart extends Component {
     constructor(props){
         super(props);
         this.state = {
-            international: false
+            international: false,
+            discountCodeValue: "",
+            closerFamily: false
         }
 
         this.toggleIntl = this.toggleIntl.bind(this);
+        this.handleDiscountInput = this.handleDiscountInput.bind(this);
+        this.applyDiscountCode = this.applyDiscountCode.bind(this);
     }
 
     toggleIntl(){
         this.setState(state => ({international: !state.international}));
+    }
+
+    handleDiscountInput(event){
+        this.setState({discountCodeValue: event.target.value});
+    }
+
+    applyDiscountCode(){
+        const capDiscountCode = this.state.discountCodeValue.toUpperCase();
+        console.log("apply discount code: " + capDiscountCode );
+        if(capDiscountCode === "CLOSERFAMILY"){
+            this.setState({closerFamily: true});
+        }
     }
 
     render() {
@@ -78,9 +94,15 @@ class Cart extends Component {
 
         let cartItems = props.cart.map((item, i, arr) => {
             if(arr.length - 1 === i){
-                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} lastItem={true} />
+                if(item.props.itemType === "HAT"){
+                    return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description} qty={item.quantity} key={item.props.id} size={item.size} neck={item.neck} price={item.price} lastItem={true} />
+                }
+                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description + ' - ' + item.size + `(${item.neck})`} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} neck={item.neck} price={item.price} lastItem={true} />
             } else {
-                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description  + ' - ' + item.size} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} price={item.price} />
+                if(item.props.itemType === "HAT"){
+                    return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description} qty={item.quantity} key={item.props.id} size={item.size} neck={item.neck} price={item.price} />
+                }
+                return <CartItem id={item.props.id} dispatch={props.dispatch} imgSrc={item.props.imgSrc} title={item.props.title + ' ' + item.props.description  + ' - ' + item.size + `(${item.neck})`} qty={item.quantity} key={item.props.id + ' ' + item.size} size={item.size} neck={item.neck} price={item.price} />
             }
         });
         
@@ -101,9 +123,55 @@ class Cart extends Component {
                 }
             }
         }
-        let cartCount = 0;
-        let subTotal = 0;
-        props.cart.forEach(item => {subTotal += (item.quantity * item.price); cartCount += Number(item.quantity);});
+
+        const subTotalCalculator = (closerFamily, cart) => {
+            let shirtCount = 0;
+            let count = 0;
+            let total = 0;
+            let discount = 0;
+
+            const returnDiscount = (count) => {
+                switch(count){
+                    case 5: return 28;
+                    case 6: return 28;
+                    case 7: return 28;
+                    case 8: return 28;
+                    case 9: return 28;
+                    case 10: return 56;
+                    case 11: return 56;
+                    case 12: return 56;
+                    case 13: return 56;
+                    case 14: return 56;
+                    case 15: return 84;
+                    default: return 0;
+                }
+            };
+
+            cart.forEach(item => {
+                if(item.props.itemType === "SHIRT"){
+                    shirtCount += Number(item.quantity);
+                }
+                count += Number(item.quantity);
+                total += (item.quantity * item.price);
+            });
+
+            if(closerFamily){
+                discount = returnDiscount(shirtCount);
+            }
+
+            total = total - discount;
+
+            return {
+                total: total,
+                count: count,
+                discount: discount
+            }
+        };
+
+        const subTotalObj = subTotalCalculator(this.state.closerFamily, props.cart);
+        let cartCount = subTotalObj.count;
+        let subTotal = subTotalObj.total;
+        /* props.cart.forEach(item => {subTotal += (item.quantity * item.price); cartCount += Number(item.quantity);}); */
         const shipping = shippingCalculator(cartCount, state.international);
         const cartTotal = shipping + subTotal;
         if(props.visible && props.cart.length > 0){
@@ -123,7 +191,7 @@ class Cart extends Component {
                 name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
                 quantity: item.quantity,
                 price: item.price,
-                sku: item.props.id + item.size,
+                sku: item.props.id + item.size + item.neck,
                 currency: 'USD'
             }));
 
@@ -149,6 +217,10 @@ class Cart extends Component {
                             <h1 id="cart-summary-total">Total: <sup>$</sup>{subTotal} + <sup>$</sup>{shipping}<sup id="shipping">shipping</sup></h1>
                             <button id="intl-shipping-button" onClick={this.toggleIntl}>{state.international? "CLICK IF ORDER IS WITHIN USA" : "ORDERS OUTSIDE USA CLICK HERE"}</button>
                             <div id="cart-summary-paypal">
+                                <div id="discount-code-container">
+                                    <input id="discount-code-input" type="text" onChange={this.handleDiscountInput} value={this.state.discountCodeValue} placeholder="COUPON CODE" />
+                                    <button id="discount-code-button" onClick={this.applyDiscountCode}>APPLY</button>
+                                </div>
                                 <PaypalButton 
                                     client={client}
                                     env={'production'}

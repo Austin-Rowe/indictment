@@ -1,5 +1,10 @@
 const editCart = (cart, action) => {
-    const matchingKey = cart.findIndex( item => item.props.id === action.props.id && item.size === action.size);
+    let matchingKey;
+    if(action.props.id === 16){
+        matchingKey = cart.findIndex( item => item.props.id === action.props.id); 
+    } else {
+       matchingKey = cart.findIndex( item => item.props.id === action.props.id && item.size === action.size && item.neck === action.props.neck);
+    }
 
     let copiedCart = cart.slice();
 
