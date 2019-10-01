@@ -75,7 +75,15 @@ class ProductTile extends React.Component {
                 <h2>{props.description}</h2>
                 {props.itemType === "SHIRT"? 
                     <React.Fragment>
-                        <h1><sup>$</sup>{state.price}</h1>
+                        {props.id === 19?
+                            <h1>
+                                <sup>$</sup>{state.price}<sup>20</sup>
+                            </h1>
+                            :
+                            <h1>
+                                <sup>$</sup>{state.price}
+                            </h1>
+                        }
                         <ul className="size-selector">
                             <li onClick={this.updateNeck} className={state.neck === "CREW NECK"? 'selected' : ''}>CREW NECK</li>
                             <li onClick={this.updateNeck} className={state.neck === "V-NECK"? 'selected' : ''}>V-NECK</li>

@@ -45,7 +45,7 @@ class CartItem extends Component {
         return (
             <div className={props.lastItem? "last cart-item" : "cart-item"}>
                 <img className="cart-item-image" src={props.imgSrc} alt=""/>
-                <h1 className="cart-item-title">{props.title}<br/><sup>$</sup>{state.price} EACH</h1>
+                <h1 className="cart-item-title">{props.title}<br/><sup>$</sup>{props.id === 19? (state.price + 0.2).toFixed(2) : state.price} EACH</h1>
                 <div className="cart-item-qty-container">
                     <input className="update-cart-quantity" type="number" min="0" value={state.quantity} onChange={this.updateQuantity} /> <div onClick={this.updateReduxCartQty} className="update-cart-button">UPDATE</div>
                 </div>  
@@ -129,6 +129,7 @@ class Cart extends Component {
             let count = 0;
             let total = 0;
             let discount = 0;
+            let cents = 0;
 
             const returnDiscount = (count) => {
                 switch(count){
@@ -153,6 +154,9 @@ class Cart extends Component {
                 }
                 count += Number(item.quantity);
                 total += (item.quantity * item.price);
+                if(item.props.id === 19){
+                    cents += (item.quantity * 20);
+                }
             });
 
             if(closerFamily){
@@ -161,8 +165,12 @@ class Cart extends Component {
 
             total = total - discount;
 
+            console.log(cents);
+            cents = (cents/100);
+            console.log(cents);
+            console.log(total);
             return {
-                total: total,
+                total: (total + cents).toFixed(2),
                 count: count,
                 discount: discount
             }
@@ -173,7 +181,7 @@ class Cart extends Component {
         let subTotal = subTotalObj.total;
         /* props.cart.forEach(item => {subTotal += (item.quantity * item.price); cartCount += Number(item.quantity);}); */
         const shipping = shippingCalculator(cartCount, state.international);
-        const cartTotal = shipping + subTotal;
+        const cartTotal = shipping + parseFloat(subTotal);
         if(props.visible && props.cart.length > 0){
             const client = {
                 sandbox: "AUQXEtmV08orxT5B9AURUh2JsmgMe4WwRfTp53vu8OxLBWl9-d705QlZSn5LlnOP3sx5mNtLOIYENLMg",
@@ -187,13 +195,25 @@ class Cart extends Component {
                 props.dispatch({type: "PAYMENT"});
             }
         
-            const items = props.cart.map(item => ({
-                name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
-                quantity: item.quantity,
-                price: item.price,
-                sku: item.props.id + item.size + item.neck,
-                currency: 'USD'
-            }));
+            const items = props.cart.map(item => {
+                if(item.props.id === 19){
+                    return {
+                        name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
+                        quantity: item.quantity,
+                        price: item.price + 0.2,
+                        sku: item.props.id + item.size + item.neck,
+                        currency: 'USD'
+                    }
+                } else {
+                    return {
+                        name: item.props.title + ' ' + item.props.description + ' - ' + item.size,
+                        quantity: item.quantity,
+                        price: item.price,
+                        sku: item.props.id + item.size + item.neck,
+                        currency: 'USD'
+                    }
+                }
+            });
 
             return (
                 <div id="cart" >

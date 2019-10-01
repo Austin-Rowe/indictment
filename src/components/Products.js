@@ -8,6 +8,7 @@ import ProductTile from './ProductTile';
 const Products = (props) => {
     return ( 
         <div id="products-container">
+            <ProductTile id={19} title="DECLAS SHIRT" dispatch={props.dispatch} imgSrc="short-sleeve-edits/declas.jpg" description='' itemType="SHIRT" price={20} />
             <ProductTile id={17} title="INDICTMENT CLOTHING HAT" dispatch={props.dispatch} imgSrc="short-sleeve-edits/RedIndictmentLogoCap.jpg" description='RED ON BLACK' itemType="HAT" price={24} />
             <ProductTile id={18} title="TICK TOCK HOURGLASS T-SHIRT" dispatch={props.dispatch} imgSrc="short-sleeve-edits/JusticeMockUp.jpg" description='BLUE ON RED' itemType="SHIRT" price={28} />
 
