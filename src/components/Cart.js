@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
+
 import './Cart.css';
 import PaypalButton from './PaypalButton';
 
@@ -69,7 +70,7 @@ class Cart extends Component {
         this.handleDiscountInput = this.handleDiscountInput.bind(this);
         this.applyDiscountCode = this.applyDiscountCode.bind(this);
     }
-
+  
     toggleIntl(){
         this.setState(state => ({international: !state.international}));
     }
@@ -165,10 +166,8 @@ class Cart extends Component {
 
             total = total - discount;
 
-            console.log(cents);
             cents = (cents/100);
-            console.log(cents);
-            console.log(total);
+
             return {
                 total: (total + cents).toFixed(2),
                 count: count,

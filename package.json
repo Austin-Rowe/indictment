@@ -4,12 +4,13 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.3",
+    "react-async-script-loader": "^0.3.0",
     "react-dom": "^16.8.3",
+    "react-ga": "^2.7.0",
+    "react-redux": "^5.1.0",
     "react-scripts": "2.1.5",
     "react-social-icons": "^4.1.0",
-    "react-redux": "^5.1.0",
-    "redux": "^4.0.1",
-    "react-async-script-loader": "^0.3.0"
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

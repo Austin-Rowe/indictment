@@ -4,6 +4,7 @@ sup {
 
 .product-tile-container {
     border: 1px solid rgb(223, 223, 223);
+    box-shadow: 4px 4px 5px rgb(223, 223, 223);
     border-radius: 10px;
     margin: 10px auto;
     text-align: center;
