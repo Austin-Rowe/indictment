@@ -16,7 +16,7 @@ class Products extends React.Component {
         } = this;
         return ( 
             <div id="products-container">
-                <ProductTile id={20} title="LIBERTY+JUSTICE=FORALL" dispatch={props.dispatch} imgSrc="short-sleeve-edits/liberty-justice-for-all.jpg" description='' itemType="SHIRT" noVneck price={38} />
+                <ProductTile id={20} title="LIBERTY + JUSTICE = FOR ALL" dispatch={props.dispatch} imgSrc="short-sleeve-edits/liberty-justice-for-all.jpg" description='' itemType="SHIRT" noVneck price={38} />
                 <ProductTile id={19} title="DECLAS SHIRT" dispatch={props.dispatch} imgSrc="short-sleeve-edits/declas.jpg" description='' itemType="SHIRT" price={20} />
                 <ProductTile id={17} title="INDICTMENT CLOTHING HAT" dispatch={props.dispatch} imgSrc="short-sleeve-edits/RedIndictmentLogoCap.jpg" description='RED ON BLACK' itemType="HAT" price={24} />
 
