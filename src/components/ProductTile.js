@@ -84,10 +84,14 @@ class ProductTile extends React.Component {
                                 <sup>$</sup>{state.price}
                             </h1>
                         }
-                        <ul className="size-selector">
-                            <li onClick={this.updateNeck} className={state.neck === "CREW NECK"? 'selected' : ''}>CREW NECK</li>
-                            <li onClick={this.updateNeck} className={state.neck === "V-NECK"? 'selected' : ''}>V-NECK</li>
-                        </ul>
+                        {props.noVneck? 
+                            null 
+                            :
+                            <ul className="size-selector">
+                                <li onClick={this.updateNeck} className={state.neck === "CREW NECK"? 'selected' : ''}>CREW NECK</li>
+                                <li onClick={this.updateNeck} className={state.neck === "V-NECK"? 'selected' : ''}>V-NECK</li>
+                            </ul>
+                        }
                         <ul className="size-selector">
                             <li onClick={this.updateSize} className={state.size === "XS"? 'selected' : ''}>XS</li>
                             <li onClick={this.updateSize} className={state.size === "S"? 'selected' : ''}>S</li>
